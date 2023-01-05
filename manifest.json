@@ -1,0 +1,10 @@
+{
+  "name": "Layers with Bob (Mr. Incredible)",
+  "id": "1192529809404581588",
+  "api": "1.0.0",
+  "main": "code.js",
+  "editorType": [
+    "figma"
+  ],
+  "ui": "ui.html"
+}
