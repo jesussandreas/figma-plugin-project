@@ -3,7 +3,7 @@
 // You can access browser APIs in the <script> tag inside "ui.html" which has a
 // full browser environment (see documentation).
 // This shows the HTML page in "ui.html".
-figma.showUI(__html__);
+figma.showUI(__html__, { width: 400, height: 580, title: "Layers with Bob" });
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
 // posted message.
@@ -15,19 +15,6 @@ figma.ui.onmessage = msg => {
         const layers = figma.currentPage.children;
         // get the layer array name
         const layerNames = layers.map(a => a.name);
-        // compare against
-        // const searchTerms = [
-        //   { name: "Rectangle 1" },
-        //   { name: "Frame" },
-        //   { name: "Group" },
-        //   { name: "Ellipse" },
-        //   { name: "Line" },
-        //   { name: "Polygon" },
-        //   { name: "Star" },
-        //   { name: "Lorem ipsum" },
-        //   { name: "Vector" },
-        //   { name: "Path" },
-        // ]
         const searchTerms = [
             "Rectangle",
             "Frame",
@@ -36,22 +23,26 @@ figma.ui.onmessage = msg => {
             "Line",
             "Polygon",
             "Star",
+            "Text",
             "Lorem ipsum",
             "Vector",
             "Path",
         ];
-        // const searchString = searchTerms.join(", ");
         let counter = 0;
-        const result = layerNames.forEach(layer => {
-            searchTerms.forEach(keyword => {
-                if (layer.includes(keyword)) {
-                    let increment = counter++;
-                    console.log(counter);
-                }
+        function result() {
+            layerNames.forEach(layer => {
+                searchTerms.forEach(keyword => {
+                    if (layer.includes(keyword)) {
+                        let increment = counter++;
+                        console.log(counter);
+                    }
+                });
             });
-        });
-        if (counter > 5) {
         }
-        console.log(result);
+        result();
+        figma.ui.postMessage(counter);
+    }
+    if (msg.type === 'close') {
+        figma.closePlugin();
     }
 };
