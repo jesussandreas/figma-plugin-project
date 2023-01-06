@@ -6,14 +6,20 @@
   <img id="imageid" src="https://raw.githubusercontent.com/jesussandreas/figma-plugin-project/main/images/phase1.jpg" alt="Mr Incredible">
   
   <div class="buttonGroup" id="buttonGroup">
-    <button id="start">Start Sesh</button>
-    <button id="reset">Reset</button>
-    <button id="close">Close</button>
+    <div class="leftGroup">
+      <button id="start">Start Sesh</button>
+      <button id="reset"><img src="https://raw.githubusercontent.com/jesussandreas/figma-plugin-project/main/images/sync.svg" alt="Reset Icon"> </button>
+    </div>
+    <div class="rightGroup">
+      <button id="close">Close</button>
+    </div>
   </div>
 </div>
 
 <!-- javascript -->
 <script>
+  const img = document.getElementById('imageid');
+
   document.getElementById('start').onclick = () => {
     parent.postMessage({ pluginMessage: { type: 'start-sesh' } }, '*')
   }
@@ -22,11 +28,13 @@
     parent.postMessage({ pluginMessage: { type: 'close' } }, '*')
   }
 
-  const img = document.getElementById('imageid');
+  document.getElementById('reset').onclick = () => {
+    img.src = "https://raw.githubusercontent.com/jesussandreas/figma-plugin-project/main/images/phase1.jpg";
+  }
 
   onmessage = (event) => {
     const numberBack = event.data.pluginMessage;
-    console.log("got this from the plugin code", numberBack);
+    // console.log("got this from the plugin code", numberBack);
 
     // phase 2
     if (numberBack > 0 && numberBack <= 4) {
@@ -85,6 +93,7 @@
     margin-bottom: 0;
     padding-bottom: 0;
     font-size: 24px;
+    letter-spacing: -0.2px;
   }
 
   p {
@@ -105,8 +114,26 @@
   }
 
   .buttonGroup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 100%;
+    flex-wrap: nowrap;
     margin-top: 12px;
     padding-top: 12px;
+  }
+
+  .buttonGroup .leftGroup {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-grow: 50%;
+  }
+
+  .buttonGroup .rightGroup {
+    display: flex;
+    justify-items: flex-end;
+    flex-grow: 50%;
   }
 
   button {
@@ -119,10 +146,31 @@
     /* cursor: pointer; */
   }
 
+  #reset {
+    border: 2px solid #141414;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #reset img {
+    margin: 0;
+    padding: 8px 12px 8px 12px;
+    max-width: 20px;
+    max-height: 20px;
+    height: 20px;
+    width: 20px;
+    will-change: transform;
+    transition: all .3s ease-in-out;
+  }
+
+  #reset img:hover {
+    transform: rotate(-34deg);
+  }
+
   #start {
-    background-color: #1d202b;
+    background-color: #141414;
     color: whitesmoke;
-    border: 2px solid #1d202b;
+    border: 2px solid #141414;
     margin-right: 8px;
   }
 
@@ -132,11 +180,11 @@
   }
 
   #close {
-    border: 2px solid #1d202b;
+    border: 2px solid #141414;
   }
 
   #close:hover {
-    background-color: #1d202b;
+    background-color: #141414;
     color: whitesmoke;
     /* transform: translateY(-2px); */
     /* box-shadow: 0 14px 32px 0 rgba(0, 0, 0, 0.3); */
